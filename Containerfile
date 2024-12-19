@@ -4,13 +4,7 @@ FROM ghcr.io/ublue-os/bazzite:stable
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     rpm-ostree override remove \
         fish \
-        vim \
-        cockpit-networkmanager \
-        cockpit-podman \
-        cockpit-selinux \
-        cockpit-system \
-        cockpit-navigator \
-        cockpit-storaged && \
+        vim && \
     /usr/libexec/containerbuild/cleanup.sh && \
     ostree container commit
 
