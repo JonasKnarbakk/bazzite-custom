@@ -18,10 +18,15 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     rpm-ostree install \
         zsh \
         neovim \
+        bat \
+        cargo \
+        zoxide \
+        zsh-autosuggestions \
+        zsh-syntax-highlighting \
         stow \
-	pass \
-	wl-clipboard \
-	wofi \
+        pass \
+        wl-clipboard \
+        wofi \
         picocom && \
     /usr/libexec/containerbuild/cleanup.sh && \
     ostree container commit
