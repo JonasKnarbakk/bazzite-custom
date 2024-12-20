@@ -18,19 +18,25 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     rpm-ostree install \
         bat \
         black \
-        cargo \
+        bzip2-devel \
         clang \
         clang-analyzer \
         clang-tools-extra \
         fd-find \
+        libffi-devel \
         lua \
         luarocks \
         neovim \
+        openssl-devel \
         pass \
         picocom \
         python3-isort \
+        readline-devel \
         ruby \
+        ruby-devel \
+        sqlite-devel \
         stow \
+        tk-devel \
         wl-clipboard \
         wofi \
         zoxide \
