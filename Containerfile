@@ -51,7 +51,9 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
 # Install Copr packages
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     curl -Lo /etc/yum.repos.d/_copr_wezfurlong-wezterm-nightly.repo https://copr.fedorainfracloud.org/coprs/wezfurlong/wezterm-nightly/repo/fedora-"${FEDORA_MAJOR_VERSION}"/wezfurlong-wezterm-nightly-fedora-"${FEDORA_MAJOR_VERSION}".repo && \
+    curl -Lo /etc/yum.repos.d/_copr_lizardbyte-sunshine-stable.repo https://copr.fedorainfracloud.org/coprs/lizardbyte/stable/repo/fedora-"${FEDORA_MAJOR_VERSION}"/lizardbyte-stable-fedora-"${FEDORA_MAJOR_VERSION}".repo && \
     rpm-ostree install \
-        wezterm && \
+        wezterm \
+        sunshine && \
     /usr/libexec/containerbuild/cleanup.sh && \
     ostree container commit
