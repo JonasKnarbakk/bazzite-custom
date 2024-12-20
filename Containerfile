@@ -22,8 +22,10 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
         clang \
         clang-analyzer \
         clang-tools-extra \
+        compat-lua \
         fd-find \
         libffi-devel \
+        lldb \
         lua \
         luarocks \
         neovim \
