@@ -1,5 +1,7 @@
 FROM ghcr.io/ublue-os/bazzite:stable
 
+COPY system-files/ /
+
 # Remove unneeded packages
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     rpm-ostree override remove \
