@@ -24,6 +24,7 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
         bison \
         black \
         bzip2-devel \
+        ckb-next \
         clang \
         clang-analyzer \
         clang-tools-extra \
