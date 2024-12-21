@@ -18,7 +18,10 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
 # Install new packages
 RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
     rpm-ostree install \
+        autoconf \
+        automake \
         bat \
+        bison \
         black \
         bzip2-devel \
         clang \
@@ -27,22 +30,25 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
         compat-lua \
         fd-find \
         libffi-devel \
+        libtool \
+        libyaml-devel \
         lldb \
-        lua \
         luarocks \
         neovim \
         openssl-devel \
         pass \
+        patch \
         picocom \
         python3-isort \
         readline-devel \
-        ruby \
         ruby-devel \
         sqlite-devel \
         stow \
         tk-devel \
         wl-clipboard \
         wofi \
+        zlib \
+        zlib-devel \
         zoxide \
         zsh \
         zsh-autosuggestions \
