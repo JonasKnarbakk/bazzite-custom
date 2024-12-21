@@ -30,6 +30,7 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
         clang-tools-extra \
         compat-lua \
         fd-find \
+        git-lfs \
         libffi-devel \
         libtool \
         libyaml-devel \
