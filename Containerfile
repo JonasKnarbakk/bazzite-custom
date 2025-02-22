@@ -1,7 +1,7 @@
 ARG IMAGE_VENDOR="${IMAGE_VENDOR:-ublue-os}"
 
 FROM scratch AS ctx
-COPY build_files /
+COPY build-files /
 
 FROM ghcr.io/ublue-os/bazzite:stable
 COPY system-files/ /
