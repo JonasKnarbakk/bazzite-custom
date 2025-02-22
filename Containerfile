@@ -1,23 +1,39 @@
-FROM ghcr.io/ublue-os/bazzite:stable
+ARG IMAGE_VENDOR="${IMAGE_VENDOR:-ublue-os}"
 
+FROM scratch AS ctx
+COPY build_files /
+
+FROM ghcr.io/ublue-os/bazzite:stable
 COPY system-files/ /
 
+# Setup Copr repos
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/cache/rpm-ostree \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    dnf5 -y copr enable wezfurlong/wezterm-nightly && \
+    /ctx/cleanup
+
 # Remove unneeded packages
-RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
-    rpm-ostree override remove \
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/cache/rpm-ostree \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    dnf5 -y remove \
         fish \
         cockpit-networkmanager \
         cockpit-podman \
         cockpit-selinux \
         cockpit-system \
-        cockpit-navigator \
         cockpit-storaged && \
-    /usr/libexec/containerbuild/cleanup.sh && \
-    ostree container commit
+    /ctx/cleanup
 
 # Install new packages
-RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
-    rpm-ostree install \
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/cache/rpm-ostree \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    dnf5 -y install \
         autoconf \
         automake \
         bat \
@@ -47,6 +63,7 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
         sqlite-devel \
         stow \
         tk-devel \
+        wezterm \
         wl-clipboard \
         wofi \
         zlib \
@@ -55,15 +72,11 @@ RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
         zsh \
         zsh-autosuggestions \
         zsh-syntax-highlighting && \
-    /usr/libexec/containerbuild/cleanup.sh && \
-    ostree container commit
+    /ctx/cleanup
 
-# Install Copr packages
-RUN --mount=type=cache,dst=/var/cache/rpm-ostree \
-    curl -Lo /etc/yum.repos.d/_copr_wezfurlong-wezterm-nightly.repo https://copr.fedorainfracloud.org/coprs/wezfurlong/wezterm-nightly/repo/fedora-"${FEDORA_MAJOR_VERSION}"/wezfurlong-wezterm-nightly-fedora-"${FEDORA_MAJOR_VERSION}".repo && \
-    curl -Lo /etc/yum.repos.d/_copr_lizardbyte-sunshine-stable.repo https://copr.fedorainfracloud.org/coprs/lizardbyte/stable/repo/fedora-"${FEDORA_MAJOR_VERSION}"/lizardbyte-stable-fedora-"${FEDORA_MAJOR_VERSION}".repo && \
-    rpm-ostree install \
-        wezterm \
-        sunshine && \
-    /usr/libexec/containerbuild/cleanup.sh && \
-    ostree container commit
+# Cleanup and finalize
+RUN --mount=type=cache,dst=/var/cache/libdnf5 \
+    --mount=type=cache,dst=/var/cache/rpm-ostree \
+    --mount=type=bind,from=ctx,source=/,target=/ctx \
+    --mount=type=tmpfs,dst=/tmp \
+    /ctx/finalize
