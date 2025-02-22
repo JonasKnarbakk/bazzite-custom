@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '05 10 * * *'  # 10:05am UTC everyday
+    - cron: '40 4 * * 1'  # 4:40 am UTC on Tuesdays (day after Bazzite's cronjob)
   push:
     branches:
       - main
