@@ -11,7 +11,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
     --mount=type=cache,dst=/var/cache/rpm-ostree \
     --mount=type=bind,from=ctx,source=/,target=/ctx \
     --mount=type=tmpfs,dst=/tmp \
-    dnf5 -y copr enable wezfurlong/wezterm-nightly && \
+    dnf5 -y copr enable pgdev/ghostty && \
     /ctx/cleanup
 
 # Remove unneeded packages
@@ -46,6 +46,7 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
         clang-tools-extra \
         compat-lua \
         fd-find \
+        ghostty \
         git-lfs \
         libffi-devel \
         libtool \
@@ -63,7 +64,6 @@ RUN --mount=type=cache,dst=/var/cache/libdnf5 \
         sqlite-devel \
         stow \
         tk-devel \
-        wezterm \
         wl-clipboard \
         wofi \
         zlib \
